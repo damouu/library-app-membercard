@@ -30,5 +30,7 @@ public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecifi
 
     Page<Book> findAll(Specification<Book> specification, Pageable pageable);
 
+    @Query("SELECT b FROM book b WHERE b.deleted_at is null and b.uuid = :uuid")
+    Optional<BookStudent> findBookStudentByUUID(UUID uuid);
 
 }
