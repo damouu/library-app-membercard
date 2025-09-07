@@ -193,13 +193,20 @@ public class BookService {
      */
     public ResponseEntity<?> returnStudentBorrowBooks(UUID bookUuid, UUID studentUuidCard) {
         Book book = bookRepository.findByUuid(bookUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book does not exist"));
-        StudentIdCard studentIdCard = studentIdCardRepository.findStudentIdCardByUuid(studentUuidCard).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "studentIdCard does not exist" + studentUuidCard));
-//        if (book.getStudentIdCard() != null && book.getStudentIdCard().getUuid().equals(studentIdCard.getUuid())) {
-//            book.setStudentIdCard(null);
-//            bookRepository.save(book);
-//            return ResponseEntity.status(200).build();
-//        }
-        return ResponseEntity.noContent().build();
+        Optional<BookStudent> bookStudent = bookStudentRepository.findBookStudentByID(book.getId());
+        int status;
+        String response;
+        if (bookStudent.isPresent() && bookStudent.get().getBorrow_return_date() == null) {
+            Date borrow_request_date = new Date();
+            bookStudent.get().setBorrow_return_date(borrow_request_date);
+            bookStudentRepository.save(bookStudent.get());
+            status = 200;
+            response = "book returned";
+        } else {
+            status = 400;
+            response = "error";
+        }
+        return ResponseEntity.status(status).body(response);
     }
 
     /**
