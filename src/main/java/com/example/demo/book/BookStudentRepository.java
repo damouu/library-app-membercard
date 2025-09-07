@@ -13,4 +13,8 @@ public interface BookStudentRepository extends JpaRepository<BookStudent, Intege
     @Query("SELECT b FROM BookStudent b WHERE b.book.id = :id")
     Optional<BookStudent> findBookStudentByID(int id);
 
+
+    @Query("SELECT b FROM BookStudent b WHERE b.book.id = :id and b.granted_borrow_extend = false and b.borrow_return_date = null ")
+    Optional<BookStudent> findBookStudentByIDUpdate(int id);
+
 }
