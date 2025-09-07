@@ -17,6 +17,9 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.*;
 
+/**
+ * The type Book service.
+ */
 @Service
 @Data
 public class BookService {
@@ -24,7 +27,14 @@ public class BookService {
     private final BookRepository bookRepository;
 
     private final StudentIdCardRepository studentIdCardRepository;
+    private final BookStudentRepository bookStudentRepository;
 
+    /**
+     * Gets books.
+     *
+     * @param allParams the all params
+     * @return the books
+     */
     public ResponseEntity<?> getBooks(Map allParams) {
         PageRequest pageable;
         if (allParams.size() == 2 && allParams.containsKey("page") && allParams.containsKey("size")) {
@@ -49,6 +59,13 @@ public class BookService {
         }
     }
 
+    /**
+     * Search books list.
+     *
+     * @param search the search
+     * @return the list
+     * @throws ResponseStatusException the response status exception
+     */
     public List<Book> searchBooks(String search) throws ResponseStatusException {
         final Specification<Book> specification = BookSpecification.searchBook(search);
         final List<Book> books = bookRepository.findAll(specification);
@@ -113,6 +130,8 @@ public class BookService {
     }
 
     /**
+     * Update book response entity.
+     *
      * @param bookUuid    the wanted book to be updated.
      * @param bookUpdates a key value array containing the updated data to be replaced with the current book.
      * @return ResponseEntity returns a ResponseEntity object with a URI location of the updated book.
@@ -136,17 +155,42 @@ public class BookService {
         return ResponseEntity.status(200).location(URI.create("http://localhost:8083/api/book/" + book11.getUuid())).body(book11);
     }
 
+
+    /**
+     * Insert student borrow books response entity.
+     *
+     * @param bookUuid        the book uuid
+     * @param studentUuidCard the student uuid card
+     * @return {@code } the response entity
+     */
     public ResponseEntity<?> insertStudentBorrowBooks(UUID bookUuid, UUID studentUuidCard) {
         Book book = bookRepository.findByUuid(bookUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book does not exist"));
         StudentIdCard studentIdCard = studentIdCardRepository.findStudentIdCardByUuid(studentUuidCard).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "studentIdCard does not exist" + studentUuidCard));
-        if (book.getStudentIdCard() == null) {
-            book.setStudentIdCard((Set<BookStudent>) studentIdCard);
-            bookRepository.save(book);
-            return ResponseEntity.status(201).build();
+        Optional<BookStudent> bookStudent = bookStudentRepository.findBookStudentByID(book.getId());
+        int status;
+        String response;
+        if (bookStudent.isPresent() && bookStudent.get().getBorrow_return_date() == null) {
+            status = 422;
+            response = "already borrowed";
+        } else {
+            Date borrow_request_date = new Date();
+            BookStudent bookStudent1 = new BookStudent(borrow_request_date, borrow_request_date, null, null, false);
+            bookStudent1.setBook(book);
+            bookStudent1.setStudentIdCard(studentIdCard);
+            bookStudentRepository.save(bookStudent1);
+            status = 201;
+            response = "created";
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(status).body(response);
     }
 
+    /**
+     * Return student borrow books response entity.
+     *
+     * @param bookUuid        the book uuid
+     * @param studentUuidCard the student uuid card
+     * @return the response entity
+     */
     public ResponseEntity<?> returnStudentBorrowBooks(UUID bookUuid, UUID studentUuidCard) {
         Book book = bookRepository.findByUuid(bookUuid).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book does not exist"));
         StudentIdCard studentIdCard = studentIdCardRepository.findStudentIdCardByUuid(studentUuidCard).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "studentIdCard does not exist" + studentUuidCard));
@@ -158,6 +202,12 @@ public class BookService {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Gets books student card.
+     *
+     * @param studentUuidCard the student uuid card
+     * @return the books student card
+     */
     public ResponseEntity<?> getBooksStudentCard(UUID studentUuidCard) {
         StudentIdCard studentIdCard = studentIdCardRepository.findStudentIdCardByUuid(studentUuidCard).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "studentIdCard does not exist" + studentUuidCard));
         if (!studentIdCard.getBooks().isEmpty()) {
