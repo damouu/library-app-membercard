@@ -43,8 +43,9 @@ public class MemberCardService {
     }
 
     public ResponseEntity deleteMemberCard(UUID memberCardUUID) throws ResponseStatusException {
-        MemberCard MemberCard = this.memberCardRepository.findMemberCardByUuid(memberCardUUID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "student card does not exist"));
-        memberCardRepository.delete(MemberCard);
+        Optional<MemberCard> memberCard = Optional.ofNullable(memberCardRepository.findMemberCardByUuid(memberCardUUID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "student card does not exist")));
+        memberCard.get().setDeleted_at(LocalDateTime.now());
+        memberCardRepository.save(memberCard.get());
         return ResponseEntity.status(204).build();
     }
 
@@ -52,7 +53,6 @@ public class MemberCardService {
         MemberCard memberCard = new MemberCard(memberCardUUID);
         memberCard.setCreated_at(LocalDateTime.now());
         memberCard.setValid_until(LocalDateTime.now().plusYears(2));
-        memberCard.setActive(true);
         memberCardRepository.save(memberCard);
         return ResponseEntity.status(HttpStatus.CREATED).location(URI.create("http://localhost:8083/api/studentCard/" + memberCard.getUuid())).body(memberCard);
     }
