@@ -1,6 +1,12 @@
 package com.example.demo.book;
 
 import com.example.demo.memberCard.MemberCard;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,16 +48,27 @@ public class BookMemberCard {
     @Getter(onMethod = @__(@JsonIgnore))
     @Setter
     private Date borrow_start_date;
-    private Date borrow_end_date;
-    private Date borrow_return_date;
-    private boolean granted_borrow_extend;
 
-    public BookMemberCard(Date borrow_request_date, Date borrow_start_date, Date borrow_end_date, Date borrow_return_date, boolean granted_borrow_extend) {
-        this.borrow_request_date = borrow_request_date;
+    @Column(name = "borrow_end_date", nullable = false, columnDefinition = "Date")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @Getter(onMethod = @__(@JsonIgnore))
+    @Setter
+    private Date borrow_end_date;
+
+    @Column(name = "borrow_return_date", nullable = false, columnDefinition = "Date")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @Getter(onMethod = @__(@JsonIgnore))
+    @Setter
+    private Date borrow_return_date;
+
+
+    @JsonCreator
+    public BookMemberCard(Date borrow_start_date, Date borrow_end_date, Date borrow_return_date) {
         this.borrow_start_date = borrow_start_date;
         this.borrow_end_date = borrow_end_date;
         this.borrow_return_date = borrow_return_date;
-        this.granted_borrow_extend = granted_borrow_extend;
     }
 
 }
