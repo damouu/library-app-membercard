@@ -17,20 +17,20 @@ import java.util.UUID;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer>, JpaSpecificationExecutor<Book> {
 
-    @Query("SELECT b FROM book b WHERE b.deleted_at is null and b.uuid = :uuid")
+    @Query("SELECT b FROM book b WHERE b.deleted_at is null and b.book_uuid = :uuid")
     Optional<Book> findByUuid(UUID uuid);
 
-    Optional<List<Book>> findByTitleContaining(@Param("title") String title, Pageable pageable);
-
-    Optional<Collection<Book>> findAllByTotalPages(Optional<Integer> integer);
-
-    Optional<Collection<Book>> findAllByGenre(Optional<String> stringOptional);
-
-    Optional<Collection<Book>> findAllByGenreAndTotalPages(Optional<String> genre, Optional<Integer> totalPages);
+//    Optional<List<Book>> findByTitleContaining(@Param("title") String title, Pageable pageable);
+//
+//    Optional<Collection<Book>> findAllByTotalPages(Optional<Integer> integer);
+//
+//    Optional<Collection<Book>> findAllByGenre(Optional<String> stringOptional);
+//
+//    Optional<Collection<Book>> findAllByGenreAndTotalPages(Optional<String> genre, Optional<Integer> totalPages);
 
     Page<Book> findAll(Specification<Book> specification, Pageable pageable);
 
-    @Query("SELECT b FROM book b WHERE b.deleted_at is null and b.uuid = :uuid")
+    @Query("SELECT b FROM book b WHERE b.deleted_at is null and b.book_uuid = :uuid")
     Optional<BookMemberCard> findBookStudentByUUID(UUID uuid);
 
 }
