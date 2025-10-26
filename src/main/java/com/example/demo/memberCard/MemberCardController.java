@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Data
 @Validated
-@CrossOrigin(allowedHeaders = "*", origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
+@CrossOrigin(allowedHeaders = "*", origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
 @RestController
 @RequestMapping("api/memberCard")
 public class MemberCardController {
@@ -24,14 +24,14 @@ public class MemberCardController {
         return memberCardService.getMemberCards(page, size);
     }
 
-    @GetMapping(path = "{studentCardUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LinkedHashMap<String, Object>> getMemberCard(@PathVariable("studentCardUuid") UUID studentCardUuid) {
-        return memberCardService.getMemberCard(studentCardUuid);
+    @GetMapping(path = "{memberCardUUID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<LinkedHashMap<String, Object>> getMemberCard(@PathVariable("memberCardUUID") UUID memberCardUUID) {
+        return memberCardService.getMemberCard(memberCardUUID);
     }
 
-    @DeleteMapping(value = "/{studentCardUuid}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteMemberCard(@PathVariable("studentCardUuid") UUID studentCardUuid) {
-        return memberCardService.deleteMemberCard(studentCardUuid);
+    @DeleteMapping(value = "/{memberCardUUID}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteMemberCard(@PathVariable("memberCardUUID") UUID memberCardUUID) {
+        return memberCardService.deleteMemberCard(memberCardUUID);
     }
 
     @PostMapping(path = "/{memberCardUUID}", produces = MediaType.APPLICATION_JSON_VALUE)
