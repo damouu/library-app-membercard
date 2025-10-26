@@ -54,7 +54,7 @@ public class MemberCardService {
         memberCard.setCreated_at(LocalDateTime.now());
         memberCard.setValid_until(LocalDateTime.now().plusYears(2));
         memberCardRepository.save(memberCard);
-        return ResponseEntity.status(HttpStatus.CREATED).location(URI.create("http://localhost:8083/api/studentCard/" + memberCard.getUuid())).body(memberCard);
+        return ResponseEntity.status(HttpStatus.CREATED).location(URI.create("http://localhost:8083/api/studentCard/" + memberCard.getMember_card_uuid())).body(memberCard);
     }
 
 
