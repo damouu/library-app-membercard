@@ -1,6 +1,7 @@
 package com.example.demo.chapter;
 
 import com.example.demo.series.Series;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -84,5 +85,18 @@ public class Chapter {
     @Setter
     private LocalDate created_at;
 
-
+    @JsonCreator
+    public Chapter(Integer id, UUID chapter_uuid, String title, String second_title, Integer totalPages, Integer chapter_number, String cover_artwork_URL, LocalDate publication_date, Series series, LocalDate deleted_at, LocalDate created_at) {
+        this.id = id;
+        this.chapter_uuid = chapter_uuid;
+        this.title = title;
+        this.second_title = second_title;
+        this.totalPages = totalPages;
+        this.chapter_number = chapter_number;
+        this.cover_artwork_URL = cover_artwork_URL;
+        this.publication_date = publication_date;
+        this.series = series;
+        this.deleted_at = deleted_at;
+        this.created_at = created_at;
+    }
 }
