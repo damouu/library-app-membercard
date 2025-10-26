@@ -26,7 +26,7 @@ public class Chapter {
     @SequenceGenerator(name = "chapter_sequence", allocationSize = 1, sequenceName = "chapter_sequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "chapter_sequence")
     @Column(updatable = false, nullable = false)
-    @Getter(onMethod = @__(@JsonIgnore)) // generate the getter with the specific annotation.
+    @Getter(onMethod = @__(@JsonIgnore))
     @Setter
     private Integer id;
 
@@ -64,7 +64,7 @@ public class Chapter {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
     @NotNull
-    @Getter(onMethod = @__(@JsonIgnore)) // generate the getter with the specific annotation.
+    @Getter(onMethod = @__(@JsonIgnore))
     @Setter
     private LocalDate publication_date;
 
@@ -72,16 +72,15 @@ public class Chapter {
     @JoinColumn(name = "series_id", referencedColumnName = "id")
     private Series series;
 
-    @Column(name = "deleted_at", columnDefinition = "DATE")
+    @Column(name = "deleted_at", columnDefinition = "timestamp")
     @Getter
     @Setter
     private LocalDate deleted_at;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "Date")
+    @Column(name = "created_at", nullable = false, columnDefinition = "timestamp")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
-    @NotNull
-    @Getter(onMethod = @__(@JsonIgnore)) // generate the getter with the specific annotation.
+    @Getter(onMethod = @__(@JsonIgnore))
     @Setter
     private LocalDate created_at;
 
