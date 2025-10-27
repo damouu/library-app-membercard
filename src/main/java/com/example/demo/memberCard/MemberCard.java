@@ -1,6 +1,5 @@
 package com.example.demo.memberCard;
 
-import com.example.demo.book.BookMemberCard;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,8 +11,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -48,12 +45,6 @@ public class MemberCard implements Serializable {
     @Getter
     @Setter
     private LocalDateTime deleted_at;
-
-
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    @Getter(onMethod = @__(@JsonIgnore))
-    @Setter
-    protected Set<BookMemberCard> books = new HashSet<>();
 
     @JsonCreator
     public MemberCard(@JsonProperty("uuid") UUID uuid) {
