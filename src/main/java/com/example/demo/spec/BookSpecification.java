@@ -1,5 +1,7 @@
-package com.example.demo.book;
+package com.example.demo.spec;
 
+import com.example.demo.model.Book;
+import com.example.demo.model.Series;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
