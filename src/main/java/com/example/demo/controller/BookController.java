@@ -1,5 +1,7 @@
-package com.example.demo.book;
+package com.example.demo.controller;
 
+import com.example.demo.model.Book;
+import com.example.demo.service.BookService;
 import lombok.Data;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
