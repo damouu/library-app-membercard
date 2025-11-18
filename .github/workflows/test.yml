@@ -33,7 +33,7 @@ jobs:
         run: echo "::set-output name=msg::$(mvn test -Dsurefire.useFile=false | grep 'ERROR' | head -4 | tail -1 | cut -d' ' -f2- | rev | cut -c 35- | rev)"
         id: mvn_test_error_short
 
-      - name: Runing Unit/ Integration Tests
+      - name: Running Unit/ Integration Tests
         id: run_tests
         run: mvn test
 
@@ -53,19 +53,19 @@ jobs:
           update_existing: true
           search_existing: open
 
-      - name: Add TestFailed
-        if: ${{ failure() }}
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_prefix: ${{ github.event.head_commit.message }} TestFailed
+#      - name: Add TestFailed
+#        if: ${{ failure() }}
+#        uses: devops-infra/action-commit-push@master
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          commit_prefix: ${{ github.event.head_commit.message }} TestFailed
 
-      - name: Add TestsPassed
-        if: ${{ success() }}
-        uses: devops-infra/action-commit-push@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          commit_prefix: ${{ github.event.head_commit.message }} TestsPassed
+#      - name: Add TestsPassed
+#        if: ${{ success() }}
+#        uses: devops-infra/action-commit-push@master
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          commit_prefix: ${{ github.event.head_commit.message }} TestsPassed
 
       - name: pull-request
         if: ${{ success() }}
