@@ -74,7 +74,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MYWORKFLOW  }}
         with:
-          GITHUB_TOKEN: ${{ secrets.MYWORKFLOW  }}
           source_branch: "test"
           destination_branch: "main"
           pr_title: ${{ github.event.head_commit.message }}
