@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -42,7 +42,6 @@ jobs:
         id: run_integration_tests
         run: mvn verify
 
-      - uses: actions/checkout@v3
       - name: Create an issue
         if: ${{ failure() }}
         uses: JasonEtco/create-an-issue@v2
