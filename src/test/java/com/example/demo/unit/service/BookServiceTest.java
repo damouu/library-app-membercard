@@ -5,6 +5,7 @@ import com.example.demo.repository.BookRepository;
 import com.example.demo.service.BookService;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,11 +30,18 @@ class BookServiceTest {
     @InjectMocks
     private BookService bookService;
 
-    Book book = Instancio.create(Book.class);
+    Book book;
+
+    @BeforeEach
+    void setUp() {
+        book = Instancio.create(Book.class);
+
+    }
 
 
     @Test
     void getBookUuid() {
+
         Mockito.when(bookRepository.findByUuid(book.getBookUUID())).thenReturn(java.util.Optional.of(book));
         ResponseEntity<Map<String, Map<String, String>>> responseEntity = bookService.getBookUuid(book.getBookUUID());
         Assertions.assertTrue(responseEntity.getStatusCode().is2xxSuccessful());
