@@ -12,9 +12,12 @@ target/
 .settings
 .springBeans
 .sts4-cache
+target
+.env
 
 ### IntelliJ IDEA ###
 .idea
+compose.yml
 *.iws
 *.iml
 *.ipr
@@ -28,6 +31,3 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-
-public_key.pem
-.env
