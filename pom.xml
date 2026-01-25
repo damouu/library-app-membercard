@@ -14,9 +14,11 @@
     <artifactId>membercard-service</artifactId>
     <version>1.7.2-SNAPSHOT</version>
 
-    <name>図書館 membercard Service</name>
+    <name>図書館システム 会員管理サービス</name>
     <description>
-        図書館システムの貸し出しを提供し、 フロントエンドに貸し出し状況を変更しや歴史のユーザーの借りた本を供給するAPI。
+        図書館システムにおける会員カード情報を管理するサービスです。
+        認証サービスからのユーザー登録イベントを Kafka 経由で受信し、
+        会員カードID、有効期限などの会員情報を生成・管理します。
     </description>
 
     <dependencies>
