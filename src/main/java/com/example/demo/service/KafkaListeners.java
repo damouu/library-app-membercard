@@ -17,12 +17,12 @@ public class KafkaListeners {
     }
 
     @KafkaListener(topics = "auth-create-topic", groupId = "membercard-group")
-    void listenerBorrow(Map<String, String> message) {
+    public void listenerBorrow(Map<String, String> message) {
         memberCardService.postMemberCard(message);
     }
 
     @KafkaListener(topics = "auth-delete-topic", groupId = "membercard-group")
-    void listenerReturn(Map<String, String> message) {
+    public void listenerReturn(Map<String, String> message) {
         memberCardService.deleteMemberCard(message);
     }
 }
