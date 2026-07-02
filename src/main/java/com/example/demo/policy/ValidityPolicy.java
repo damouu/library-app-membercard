@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 public class ValidityPolicy {
 
     public LocalDateTime calculateExpiration(UserCreatedEvent event) {
-        return event.metadata().timestamp().plusYears(2);
+        return event.metadata().timestamp().plusYears(2).toLocalDateTime();
     }
 }
