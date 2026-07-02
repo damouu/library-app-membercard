@@ -42,7 +42,7 @@ Kafka 経由でユーザー登録イベントを非同期に受信し、会員�
 - Credential management
 - Client-facing APIs
 - Catalog operations
-- Borrow transaction execution
+- membercard transaction execution
 - Notification dispatching
 
 ---

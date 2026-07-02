@@ -1,6 +1,7 @@
 package com.example.demo.unit.service;
 
-import com.example.demo.service.KafkaListeners;
+import com.example.demo.dto.*;
+import com.example.demo.kafka.listener.KafkaListeners;
 import com.example.demo.service.MemberCardService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 import static org.mockito.Mockito.verify;
 
@@ -27,19 +29,25 @@ class KafkaListenersTest {
     }
 
     @Test
-    @DisplayName("Should delegate borrow event to postMemberCard")
-    void listenerBorrow_ShouldCallPostMemberCard() {
-        Map<String, String> message = Map.of("uuid", "test");
-        kafkaListeners.listenerBorrow(message);
-        verify(memberCardService).postMemberCard(message);
+    @DisplayName("Should delegate membercard event to postMemberCard")
+    void listenermembercard_ShouldCallPostMemberCard() {
+        UUID memberCardUuid = UUID.randomUUID();
+        Metadata metadata = new Metadata(LocalDateTime.now(), "library-app-authentication-v2", "USER_CREATED", UUID.randomUUID());
+        UserCreatedEventData data = new UserCreatedEventData(memberCardUuid);
+        UserCreatedEvent event = new UserCreatedEvent(metadata, data);
+        kafkaListeners.listenermembercard(event);
+        verify(memberCardService).postMemberCard(event);
     }
 
     @Test
     @DisplayName("Should delegate delete event to deleteMemberCard")
     void listenerReturn_ShouldCallDeleteMemberCard() {
-        Map<String, String> message = Map.of("uuid", "test");
-        kafkaListeners.listenerReturn(message);
-        verify(memberCardService).deleteMemberCard(message);
+        UUID memberCardUuid = UUID.randomUUID();
+        Metadata metadata = new Metadata(LocalDateTime.now(), "library-app-authentication-v2", "USER_CREATED", UUID.randomUUID());
+        UserDeletedEventData data = new UserDeletedEventData(memberCardUuid);
+        UserDeletedEvent event = new UserDeletedEvent(metadata, data);
+        kafkaListeners.listenerReturn(event);
+        verify(memberCardService).deleteMemberCard(event);
     }
 
 
