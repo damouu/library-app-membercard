@@ -1,12 +1,9 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +14,8 @@ import java.util.UUID;
 @Entity(name = "member_card")
 @Table(name = "member_card", uniqueConstraints = @UniqueConstraint(columnNames = {"member_card_uuid", "member_card_uuid"}, name = "member_card_uuid_unique"))
 @NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class MemberCard implements Serializable {
     @Id
     @Column(unique = true, updatable = false, nullable = false)
@@ -31,10 +30,9 @@ public class MemberCard implements Serializable {
     @Setter
     private UUID memberCardUUID;
 
-    @Column(name = "created_at", columnDefinition = "timestamp", nullable = false)
-    @Getter
-    @Setter
-    private LocalDateTime createdAT;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
 
     @Column(name = "valid_until", columnDefinition = "date", nullable = false)
     @Getter
@@ -45,10 +43,4 @@ public class MemberCard implements Serializable {
     @Getter
     @Setter
     private LocalDateTime deleted_at;
-
-
-    @JsonCreator
-    public MemberCard(@JsonProperty("uuid") UUID uuid) {
-        this.memberCardUUID = uuid;
-    }
 }
