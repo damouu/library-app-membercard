@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import static org.mockito.Mockito.verify;
@@ -32,7 +32,7 @@ class KafkaListenersTest {
     @DisplayName("Should delegate membercard event to postMemberCard")
     void listenermembercard_ShouldCallPostMemberCard() {
         UUID memberCardUuid = UUID.randomUUID();
-        Metadata metadata = new Metadata(LocalDateTime.now(), "library-app-authentication-v2", "USER_CREATED", UUID.randomUUID());
+        Metadata metadata = new Metadata(OffsetDateTime.now().now(), "library-app-authentication-v2", "USER_CREATED", UUID.randomUUID());
         UserCreatedEventData data = new UserCreatedEventData(memberCardUuid);
         UserCreatedEvent event = new UserCreatedEvent(metadata, data);
         kafkaListeners.listenermembercard(event);
@@ -43,7 +43,7 @@ class KafkaListenersTest {
     @DisplayName("Should delegate delete event to deleteMemberCard")
     void listenerReturn_ShouldCallDeleteMemberCard() {
         UUID memberCardUuid = UUID.randomUUID();
-        Metadata metadata = new Metadata(LocalDateTime.now(), "library-app-authentication-v2", "USER_CREATED", UUID.randomUUID());
+        Metadata metadata = new Metadata(OffsetDateTime.now(), "library-app-authentication-v2", "USER_CREATED", UUID.randomUUID());
         UserDeletedEventData data = new UserDeletedEventData(memberCardUuid);
         UserDeletedEvent event = new UserDeletedEvent(metadata, data);
         kafkaListeners.listenerReturn(event);
