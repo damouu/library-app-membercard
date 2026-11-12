@@ -1,31 +1,20 @@
-# Library App MemberCard Service / 会員カード管理サービス
+# Library App MemberCard Service
 
 Distributed Library System — MemberCard Service
 
-分散型図書館システム — 会員カード管理サービス
-
 ---
 
-## Overview / 概要
+## Overview
 
 The MemberCard Service is an internal event-driven microservice within the distributed library platform.
 
-It is responsible for consuming user registration events through Kafka, generating membership card records, and
-maintaining persistent membership state.
+It is responsible for consuming user registration events through Kafka, generating membership card records, and maintaining persistent membership state.
 
 The service operates asynchronously and acts as the source of truth for member card lifecycle management.
 
 ---
 
-MemberCard Service は分散型図書館システムにおける内部イベント駆動型会員カード管理サービスです。
-
-Kafka 経由でユーザー登録イベントを非同期に受信し、会員カード情報を生成・永続化します。
-
-本サービスは非同期に動作し、会員カードライフサイクル管理の単一責任ソースとして機能します。
-
----
-
-## Service Boundaries / サービス境界
+## Service Boundaries
 
 ### Provides
 
@@ -42,7 +31,7 @@ Kafka 経由でユーザー登録イベントを非同期に受信し、会員�
 - Credential management
 - Client-facing APIs
 - Catalog operations
-- membercard transaction execution
+- Member card transaction processing
 - Notification dispatching
 
 ---
@@ -50,28 +39,16 @@ Kafka 経由でユーザー登録イベントを非同期に受信し、会員�
 ## Badges
 
 <!-- Code Quality & Tests -->
-[![Tests](https://github.com/damouu/library-app-membercard/actions/workflows/run-tests.yml/badge.svg?branch=test)](https://github.com/damouu/library-app-membercard/actions/workflows/run-tests.yml)
 
-[![Merge PR](https://github.com/damouu/library-app-membercard/actions/workflows/merge-pr.yml/badge.svg)](https://github.com/damouu/library-app-membercard/actions/workflows/merge-pr.yml)
-
-[![Prepare](https://github.com/damouu/library-app-membercard/actions/workflows/prepare.yml/badge.svg)](https://github.com/damouu/library-app-membercard/actions/workflows/prepare.yml)
-
-<!-- Coverage -->
-[![Codecov](https://codecov.io/gh/damouu/library-app-membercard/branch/test/graph/badge.svg)](https://codecov.io/gh/damouu/library-app-membercard)
-
-<!-- Git / Version -->
-[![Git Tag](https://img.shields.io/github/v/tag/damouu/library-app-membercard?logo=github)](https://github.com/damouu/library-app-membercard/tags)
+[![Tests](https://github.com/damouu/library-app-membercard/actions/workflows/run-tests.yml/badge.svg?branch=test)](https://github.com/damouu/library-app-membercard/actions/workflows/run-tests.yml) [![Merge PR](https://github.com/damouu/library-app-membercard/actions/workflows/merge-pr.yml/badge.svg)](https://github.com/damouu/library-app-membercard/actions/workflows/merge-pr.yml) [![Prepare](https://github.com/damouu/library-app-membercard/actions/workflows/prepare.yml/badge.svg)](https://github.com/damouu/library-app-membercard/actions/workflows/prepare.yml) [![Codecov](https://codecov.io/gh/damouu/library-app-membercard/branch/test/graph/badge.svg)](https://codecov.io/gh/damouu/library-app-membercard) [![Git Tag](https://img.shields.io/github/v/tag/damouu/library-app-membercard?logo=github)](https://github.com/damouu/library-app-membercard/tags)
 
 <!-- Observability -->
-![Kafka](https://img.shields.io/badge/Kafka-integrated-orange)
 
-![Prometheus](https://img.shields.io/badge/Prometheus-monitored-blue)
+![Kafka](https://img.shields.io/badge/Kafka-integrated-orange) ![Prometheus](https://img.shields.io/badge/Prometheus-monitored-blue)
 
 ---
 
-## Responsibilities / 責務
-
-### English
+## Responsibilities
 
 - Consume registration events
 - Generate member cards
@@ -80,18 +57,9 @@ Kafka 経由でユーザー登録イベントを非同期に受信し、会員�
 - Maintain lifecycle consistency
 - Handle asynchronous membership processing
 
-### 日本語
-
-- 登録イベント処理
-- 会員カード生成
-- 有効期限管理
-- 会員情報永続化
-- ライフサイクル整合性維持
-- 非同期会員処理
-
 ---
 
-## Technology Stack / 技術スタック
+## Technology Stack
 
 | Category    | Technology                             |
 |-------------|----------------------------------------|
@@ -107,16 +75,16 @@ Kafka 経由でユーザー登録イベントを非同期に受信し、会員�
 
 ---
 
-## Event Processing / イベント処理
+## Event Processing
 
-Consumes Kafka user registration events.
+The service consumes user registration events published through Kafka.
 
-Processes:
+### Processing Operations
 
-- User registration events
+- User registration event consumption
 - Member card generation
 - Membership persistence
-- Expiration initialization
+- Card expiration initialization
 
 ---
 
@@ -132,60 +100,32 @@ Processes:
 
 ---
 
-## Processing Pipeline / 処理パイプライン
+## Processing Pipeline
 
-User Registration Event  
-↓  
-Kafka Consumer  
-↓  
-MemberCard Generation Layer  
-↓  
+User Registration Event
+
+↓
+
+Kafka Consumer
+
+↓
+
+MemberCard Generation Layer
+
+↓
+
 Database Persistence
 
 ---
 
-## Local Development / ローカル開発
-
-### Requirements
-
-- Java 9
-- Maven
-- Docker
-- PostgreSQL
-- Kafka
-
----
-
-### Run
-
-```bash
-docker compose up --build
-```
-
----
-
-## Testing / テスト
-
-```bash
-./mvnw verify
-```
-
-Includes:
-
-- Unit tests
-- Integration tests
-- Coverage verification
-
----
-
-## Coverage Policy / カバレッジポリシー
+## Coverage Policy
 
 JaCoCo quality gates:
 
 - **Line coverage ≥ 80%**
-- **Complexity missed count ≤ 3**
+- **Missed complexity count ≤ 3**
 
-Excluded from coverage:
+### Coverage Exclusions
 
 - DTO classes
 - Model classes
@@ -193,7 +133,9 @@ Excluded from coverage:
 
 ---
 
-## Configuration / 設定
+## Configuration
+
+The service uses environment-driven configuration.
 
 ```env
 SPRING_DATASOURCE_URL=
@@ -202,11 +144,9 @@ SPRING_DATASOURCE_PASSWORD=
 SPRING_KAFKA_BOOTSTRAP_SERVERS=
 ```
 
-Environment-driven configuration.
-
 ---
 
-## Monitoring / モニタリング
+## Monitoring
 
 ```text
 /actuator/health
@@ -216,7 +156,7 @@ Environment-driven configuration.
 
 ---
 
-## Build Quality / 品質保証
+## Build Quality
 
 The build pipeline enforces:
 
@@ -228,7 +168,7 @@ The build pipeline enforces:
 
 ---
 
-## Future Improvements / 今後の改善
+## Future Improvements
 
 - Membership renewal automation
 - Tier-based membership support
@@ -238,6 +178,6 @@ The build pipeline enforces:
 
 ---
 
-## License / ライセンス
+## License
 
 MIT
