@@ -42,9 +42,11 @@ The service operates asynchronously and acts as the source of truth for member c
 
 [![Tests](https://github.com/damouu/library-app-membercard/actions/workflows/run-tests.yml/badge.svg?branch=test)](https://github.com/damouu/library-app-membercard/actions/workflows/run-tests.yml) [![Merge PR](https://github.com/damouu/library-app-membercard/actions/workflows/merge-pr.yml/badge.svg)](https://github.com/damouu/library-app-membercard/actions/workflows/merge-pr.yml) [![Prepare](https://github.com/damouu/library-app-membercard/actions/workflows/prepare.yml/badge.svg)](https://github.com/damouu/library-app-membercard/actions/workflows/prepare.yml) [![Codecov](https://codecov.io/gh/damouu/library-app-membercard/branch/test/graph/badge.svg)](https://codecov.io/gh/damouu/library-app-membercard) [![Git Tag](https://img.shields.io/github/v/tag/damouu/library-app-membercard?logo=github)](https://github.com/damouu/library-app-membercard/tags)
 
-<!-- Observability -->
+<!-- Docker & Observability -->
 
-![Kafka](https://img.shields.io/badge/Kafka-integrated-orange) ![Prometheus](https://img.shields.io/badge/Prometheus-monitored-blue)
+[![Docker Image](https://img.shields.io/docker/v/damou/library-app-membercard?label=docker&logo=docker)](https://hub.docker.com/repository/docker/damou/library-app-membercard/general) [![Docker Pulls](https://img.shields.io/docker/pulls/damou/library-app-membercard?logo=docker)](https://hub.docker.com/repository/docker/damou/library-app-membercard/general) ![Kafka](https://img.shields.io/badge/Kafka-integrated-orange) ![Prometheus](https://img.shields.io/badge/Prometheus-monitored-blue)
+
+**Docker Hub:** [damou/library-app-membercard](https://hub.docker.com/repository/docker/damou/library-app-membercard/general)
 
 ---
 
