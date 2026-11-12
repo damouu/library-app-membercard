@@ -46,8 +46,6 @@ The service operates asynchronously and acts as the source of truth for member c
 
 [![Docker Image](https://img.shields.io/docker/v/damou/library-app-membercard?label=docker&logo=docker)](https://hub.docker.com/repository/docker/damou/library-app-membercard/general) [![Docker Pulls](https://img.shields.io/docker/pulls/damou/library-app-membercard?logo=docker)](https://hub.docker.com/repository/docker/damou/library-app-membercard/general) ![Kafka](https://img.shields.io/badge/Kafka-integrated-orange) ![Prometheus](https://img.shields.io/badge/Prometheus-monitored-blue)
 
-**Docker Hub:** [damou/library-app-membercard](https://hub.docker.com/repository/docker/damou/library-app-membercard/general)
-
 ---
 
 ## Responsibilities
